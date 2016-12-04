@@ -1,0 +1,17 @@
+server:
+   port: ${smev3adapter.http.port}
+
+
+#To inject into AppProperties
+foo: bar
+
+#Can manage camel context from props
+#camel:
+#  springboot:
+#    jmxEnabled: true
+#    allow-use-original-message: true
+
+
+
+routes:
+  log: log:ru.otr.integration.smev3client?level=DEBUG&showAll=true&multiline=true
