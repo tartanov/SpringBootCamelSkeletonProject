@@ -28,6 +28,12 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+
 		<!--JMS-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,6 +73,7 @@
 		<dependency>
 			<groupId>org.jolokia</groupId>
 			<artifactId>jolokia-spring</artifactId>
+			<version>${jolokia.version}</version>
 		</dependency>
 
 		<!--Templating engine-->
@@ -98,6 +105,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

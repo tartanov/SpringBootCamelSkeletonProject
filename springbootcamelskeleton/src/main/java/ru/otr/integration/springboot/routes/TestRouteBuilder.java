@@ -1,5 +1,6 @@
 package ru.otr.integration.springboot.routes;
 
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.spring.SpringRouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +16,15 @@ public class TestRouteBuilder extends SpringRouteBuilder{
 
             // Read concurrently and transactionally from queue testQueue
 
-            from("activemq:queue:testQueue").routeId("TestRoute1")
+            from("activemq:queue:testQueueRequest?").routeId("TestRoute1")
                     // Use JMS Transaction Manager as Platform manager
                     .transacted()
+                    .log(LoggingLevel.INFO, "ru.otr.integration.springboot", "ping")
                     .setHeader("Name", simple("Vasia"))
-                    .to("bean:TestBean");
+                    .to("bean:testBean")
+                    .log(LoggingLevel.INFO, "ru.otr.integration.springboot", "pong")
+                    .to("activemq:queue:testQueueResponse");
+
 
 
             /*How to use xslt
@@ -33,9 +38,6 @@ public class TestRouteBuilder extends SpringRouteBuilder{
             /*How to use templates
             .to("freemarker:templates/GetRequestRequest.ftl")
             */
-
-
-
 
         }
 }

@@ -9,13 +9,13 @@ import ru.otr.integration.springboot.config.AppProperties;
 /**
  * Created by tartanovmike on 03.12.16.
  */
-@Component
+@Component(value = "testBean")
 public class TestBean {
     @Autowired
     private AppProperties appProperties;
     // Camel Exchange will be autoinjected
     public void swapNamespaces(Exchange exchange, @Header("Name") String name) {
-        exchange.getIn().setBody("Hello" + name);
+        exchange.getIn().setBody("Hello " + name);
 
     }
 }

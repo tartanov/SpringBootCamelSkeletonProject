@@ -6,7 +6,7 @@
                            http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd
                            http://camel.apache.org/schema/cxf          http://camel.apache.org/schema/cxf/camel-cxf.xsd">
 
-    <cxf:cxfEndpoint id="testEndpoint"
+   <!-- <cxf:cxfEndpoint id="testEndpoint"
                      address="!!!set address here!!!"
                      wsdlURL="wsdl/smev-message-exchange-service-1.1.wsdl"
                      serviceName="s:SMEVMessageExchangeService"
@@ -15,7 +15,7 @@
         <cxf:properties>
             <entry key="dataFormat" value="PAYLOAD"/>
         </cxf:properties>
-    </cxf:cxfEndpoint>
+    </cxf:cxfEndpoint>-->
 
 
     <bean id="transactionErrorHandlerBuilder" class="org.apache.camel.spring.spi.TransactionErrorHandlerBuilder">
@@ -44,6 +44,11 @@
     <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
     </bean>
+
+    <!--<bean id="platformTransactionManager" class="org.springframework.transaction.PlatformTransactionManager">
+        <constructor-arg ref="jmsTransactionManager"/>
+    </bean>-->
+
 
     <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="${activemq.url}"/>
