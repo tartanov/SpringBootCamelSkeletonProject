@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd
+                           http://camel.apache.org/schema/cxf          http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+    <bean id="jdbcTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+
+    <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="url" value="jdbc:hsqldb:file:C:/Users/tartanov.mikhail/testdb/testdbfile;shutdown=true" />
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="username" value="su" />
+        <property name="password" value="" />
+
+
+    </bean>
+
+
+</beans>

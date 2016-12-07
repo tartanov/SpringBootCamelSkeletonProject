@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:/applicationContext.xml")
+@ImportResource({"classpath:/applicationContext.xml", "classpath:/applicationContextDB.xml"})
 public class SpringbootcamelskeletonApplication {
 
 	public static void main(String[] args) {

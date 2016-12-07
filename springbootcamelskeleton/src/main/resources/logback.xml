@@ -8,7 +8,7 @@
     </appender>
 
 
-    <logger name="ROOT" level="INFO" additivity="false">
+    <logger name="ROOT" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 

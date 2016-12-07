@@ -1,5 +1,5 @@
 server:
-   port: 8070
+   port: 8071
 
 #spring:
 #  autoconfigure:
@@ -16,6 +16,23 @@ foo: bar
 #  springboot:
 #    jmxEnabled: true
 #    allow-use-original-message: true
+
+
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true
+  datasource:
+    #initialize: true
+    platform: hsqldb
+
+
+
 
 activemq:
    url: tcp://localhost:61616
