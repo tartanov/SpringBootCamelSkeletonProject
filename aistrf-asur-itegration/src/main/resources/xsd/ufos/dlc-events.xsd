@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://www.otr.ru/ufos/dlc/events" targetNamespace="http://www.otr.ru/ufos/dlc/events"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+	<xsd:element name="dlc-notify-event" type="dlcNotifyEventElement"/>
+
+	<xsd:element name="dlc-action-event" type="dlcActionEventElement"/>
+
+	<xsd:complexType name="dlcNotifyEventElement">
+		<xsd:annotation>
+			<xsd:documentation>
+				Нотификация внешнего компонента (бизнес-процесса) о смене статуста документа - выполнения перехода со статуса на статус.
+			</xsd:documentation>
+		</xsd:annotation>
+
+		<xsd:sequence>
+			<xsd:element name="parameters" type="parametersElement" minOccurs="0"/>
+		</xsd:sequence>
+
+		<xsd:attribute name="document-guid" type="guid" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный идентификатор документа.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="document-type" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Тип документа.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="old-document-state" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Статус документа до выполнения перехода.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="new-document-state" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Статус документа после выполнения перехода.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="dlcActionEventElement">
+		<xsd:annotation>
+			<xsd:documentation>Вызов связанного бизнес-процесса.</xsd:documentation>
+		</xsd:annotation>
+
+		<xsd:sequence>
+			<xsd:element name="parameters" type="parametersElement" minOccurs="0"/>
+		</xsd:sequence>
+
+		<xsd:attribute name="document-guid" type="guid" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный идентификатор документа.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="document-type" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Тип документа.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="document-state" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					Исходящий статус документа, в том числе это может быть статус, указывающий на возникшую при переходе ошибку (error-state).
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="operation-code" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Код операции бизнес-процесса.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="parametersElement">
+		<xsd:sequence>
+			<xsd:element name="parameter" type="parameterElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="parameterElement">
+		<xsd:sequence>
+			<xsd:element name="value" type="xsd:string"/>
+		</xsd:sequence>
+
+		<xsd:attribute name="name" type="xsd:token" use="required"/>
+	</xsd:complexType>
+
+	<xsd:simpleType name="guid">
+		<xsd:annotation>
+			<xsd:documentation>Глобальный идентификатор. http://tools.ietf.org/html/rfc4122</xsd:documentation>
+		</xsd:annotation>
+
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd
+                           http://camel.apache.org/schema/cxf          http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+	<cxf:cxfEndpoint id="ufosDocumentWebServiceEndpoint" address="localhost:8083"
+		wsdlURL="http://depr-test-jetty.pds.otr.ru:38080/web-services/documentWebService?wsdl"
+		xmlns:s="urn://x-artefacts-smev-gov-ru/services/message-exchange/1.1">
+		<cxf:properties>
+			<entry key="dataFormat" value="PAYLOAD" />
+		</cxf:properties>
+	</cxf:cxfEndpoint>
+
+	<bean id="transactionErrorHandlerBuilder"
+		class="org.apache.camel.spring.spi.TransactionErrorHandlerBuilder">
+		<property name="redeliveryPolicy" ref="redeliveryPolicy" />
+	</bean>
+
+	<bean id="redeliveryPolicy" class="org.apache.camel.processor.RedeliveryPolicy">
+		<property name="maximumRedeliveries" value="-1" />
+		<property name="redeliveryDelay" value="300" />
+		<property name="logStackTrace" value="true" />
+	</bean>
+
+	<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="transacted" value="true" />
+		<property name="transactionManager" ref="jmsTransactionManager" />
+		<property name="configuration" ref="jmsConfig" />
+	</bean>
+
+	<bean id="jmsConfig"
+		class="org.apache.activemq.camel.component.ActiveMQConfiguration">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="transacted" value="true" />
+		<property name="transactionManager" ref="jmsTransactionManager" />
+		<property name="cacheLevelName" value="CACHE_CONSUMER" />
+		<property name="concurrentConsumers" value="3" />
+		<property name="maxConcurrentConsumers" value="10" />
+	</bean>
+
+	<bean id="jmsTransactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<!--<bean id="platformTransactionManager" class="org.springframework.transaction.PlatformTransactionManager"> 
+		<constructor-arg ref="jmsTransactionManager"/> </bean> -->
+
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${activemq.url}" />
+		<property name="userName" value="${activemq.username}" />
+		<property name="password" value="${activemq.password}" />
+		<property name="watchTopicAdvisories" value="false" />
+	</bean>
+</beans>
